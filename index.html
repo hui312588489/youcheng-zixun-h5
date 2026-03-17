@@ -1,0 +1,1410 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>博士有成智能客服</title>
+<style>
+/* 全局样式重置与基础配置 */
+:root {
+  --primary: #4361ee;
+  --primary-light: #5a74f0;
+  --primary-gradient: linear-gradient(135deg, #4361ee 0%, #3a58d8 100%);
+  --secondary: #7b61ff;
+  --text-main: #222;
+  --text-secondary: #666;
+  --text-light: #999;
+  --bg-main: #f9f9f9;
+  --bg-card: #ffffff;
+  --bg-hover: #f9fbff;
+  --border-light: #f0f0f0;
+  --border-normal: #e0e0e0;
+  --border-focus: #4361ee;
+  --shadow-sm: 0 2px 8px rgba(0,0,0,.04);
+  --shadow-md: 0 4px 12px rgba(0,0,0,.06);
+  --shadow-lg: 0 8px 24px rgba(0,0,0,.08);
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --radius-xl: 12px;
+  --transition-fast: 0.2s ease;
+  --transition-normal: 0.3s ease;
+  --transition-slow: 0.5s ease;
+}
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:"PingFang SC", "Microsoft YaHei", sans-serif;
+}
+
+body{
+  background:var(--bg-main);
+  color:var(--text-main);
+  max-width:1200px;
+  margin:0 auto;
+  padding:0;
+  line-height:1.6;
+}
+
+/* 加载动画 */
+@keyframes pulse {
+  0% { opacity: 1; }
+  50% { opacity: 0.6; }
+  100% { opacity: 1; }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.skeleton {
+  background: linear-gradient(90deg, #f0f0f0 25%, #f8f8f8 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: skeleton-loading 1.5s infinite;
+}
+
+@keyframes skeleton-loading {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* 头部样式（升级渐变+质感） */
+.header{
+  background:var(--bg-card);
+  padding:16px 0;
+  border-bottom:1px solid var(--border-light);
+  position:sticky;
+  top:0;
+  z-index:999;
+  box-shadow:var(--shadow-sm);
+}
+
+.header-inner{
+  max-width:1200px;
+  margin:0 auto;
+  padding:0 20px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+
+.logo{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  transition:var(--transition-fast);
+}
+
+.logo:hover{
+  transform:scale(1.02);
+}
+
+.logo img{
+  width:56px;
+  height:56px;
+  border-radius:var(--radius-md);
+  box-shadow:var(--shadow-sm);
+}
+
+.logo-text h1{
+  font-size:24px;
+  color:var(--text-main);
+  font-weight:600;
+  background:var(--primary-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.logo-text p{
+  font-size:14px;
+  color:var(--text-secondary);
+  margin-top:2px;
+}
+
+.header-nav a{
+  color:var(--text-secondary);
+  text-decoration:none;
+  margin-left:25px;
+  font-size:14px;
+  position:relative;
+  transition:var(--transition-fast);
+  padding:4px 0;
+}
+
+.header-nav a::after{
+  content:'';
+  position:absolute;
+  bottom:0;
+  left:0;
+  width:0;
+  height:2px;
+  background:var(--primary-gradient);
+  transition:var(--transition-fast);
+  border-radius:var(--radius-sm);
+}
+
+.header-nav a:hover{
+  color:var(--primary);
+}
+
+.header-nav a:hover::after{
+  width:100%;
+}
+
+/* 核心功能卡片（升级渐变、光影、动效） */
+.card{
+  background:var(--bg-card);
+  border-radius:var(--radius-xl);
+  padding:28px;
+  margin:20px 20px 24px;
+  box-shadow:var(--shadow-md);
+  border:1px solid var(--border-light);
+  transition:var(--transition-normal);
+  position:relative;
+  overflow:hidden;
+}
+
+.card::before{
+  content:'';
+  position:absolute;
+  top:0;
+  left:0;
+  width:100%;
+  height:4px;
+  background:var(--primary-gradient);
+}
+
+.card:hover{
+  box-shadow:var(--shadow-lg);
+  transform:translateY(-2px);
+}
+
+.card-title{
+  font-size:18px;
+  color:var(--text-main);
+  margin-bottom:24px;
+  font-weight:600;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  animation:fadeInUp 0.5s ease;
+}
+
+.card-title i{
+  color:var(--primary);
+  font-style:normal;
+  font-size:20px;
+}
+
+/* 表单样式（升级圆角、聚焦态、动效） */
+.form-group{
+  display:flex;
+  gap:16px;
+  flex-wrap:wrap;
+  margin-bottom:20px;
+}
+
+.form-control{
+  flex:1;
+  min-width:180px;
+  padding:14px 18px;
+  border:1px solid var(--border-normal);
+  border-radius:var(--radius-lg);
+  font-size:15px;
+  outline:none;
+  transition:var(--transition-fast);
+  background:var(--bg-main);
+}
+
+.form-control:focus{
+  border-color:var(--primary);
+  box-shadow:0 0 0 3px rgba(67,97,238,.1);
+  background:var(--bg-card);
+  transform:translateY(-1px);
+}
+
+.btn{
+  background:var(--primary-gradient);
+  color:white;
+  border:none;
+  padding:14px 28px;
+  border-radius:var(--radius-lg);
+  font-size:15px;
+  cursor:pointer;
+  transition:var(--transition-fast);
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  font-weight:500;
+  box-shadow:0 4px 8px rgba(67,97,238,.2);
+}
+
+.btn:hover{
+  transform:translateY(-2px);
+  box-shadow:0 6px 12px rgba(67,97,238,.3);
+}
+
+.btn:active{
+  transform:translateY(0);
+  box-shadow:0 2px 4px rgba(67,97,238,.2);
+}
+
+.btn i{
+  font-style:normal;
+}
+
+/* 结果展示区（升级样式、动效） */
+.result{
+  background:linear-gradient(135deg, #f5f8ff 0%, #eef2ff 100%);
+  padding:20px;
+  border-radius:var(--radius-lg);
+  margin-top:20px;
+  display:none;
+  color:var(--text-main);
+  line-height:1.8;
+  border:1px solid rgba(67,97,238,.1);
+  animation:scaleIn 0.3s ease;
+}
+
+/* 分类按钮组（升级样式、动效） */
+.btn-group{
+  display:flex;
+  flex-wrap:wrap;
+  gap:12px;
+  margin:0 20px 32px;
+  justify-content:center;
+}
+
+.category-btn{
+  background:var(--bg-card);
+  border:1px solid var(--border-normal);
+  color:var(--text-main);
+  padding:12px 24px;
+  border-radius:var(--radius-lg);
+  font-size:14px;
+  cursor:pointer;
+  transition:var(--transition-fast);
+  display:flex;
+  align-items:center;
+  gap:8px;
+  font-weight:500;
+  position:relative;
+  overflow:hidden;
+}
+
+.category-btn::before{
+  content:'';
+  position:absolute;
+  top:0;
+  left:-100%;
+  width:100%;
+  height:100%;
+  background:rgba(67,97,238,.05);
+  transition:var(--transition-normal);
+}
+
+.category-btn:hover{
+  border-color:var(--primary);
+  color:var(--primary);
+  background:var(--bg-hover);
+  transform:translateY(-2px);
+  box-shadow:var(--shadow-sm);
+}
+
+.category-btn:hover::before{
+  left:0;
+}
+
+.category-btn.active{
+  background:var(--primary-gradient);
+  color:white;
+  border-color:var(--primary);
+  box-shadow:0 4px 8px rgba(67,97,238,.2);
+}
+
+/* 产品展示区（升级布局、动效） */
+.product-section{
+  margin:40px 20px;
+}
+
+.section-title{
+  font-size:22px;
+  color:var(--text-main);
+  margin-bottom:28px;
+  font-weight:600;
+  text-align:center;
+  position:relative;
+  padding-bottom:12px;
+}
+
+.section-title::after{
+  content:'';
+  position:absolute;
+  bottom:0;
+  left:50%;
+  transform:translateX(-50%);
+  width:80px;
+  height:3px;
+  background:var(--primary-gradient);
+  border-radius:var(--radius-sm);
+}
+
+.product-filter{
+  display:flex;
+  justify-content:center;
+  gap:16px;
+  margin-bottom:28px;
+  flex-wrap:wrap;
+}
+
+.filter-btn{
+  background:var(--bg-card);
+  border:1px solid var(--border-normal);
+  color:var(--text-secondary);
+  padding:10px 20px;
+  border-radius:var(--radius-md);
+  font-size:14px;
+  cursor:pointer;
+  transition:var(--transition-fast);
+  font-weight:500;
+}
+
+.filter-btn:hover,.filter-btn.active{
+  border-color:var(--primary);
+  color:var(--primary);
+  background:var(--bg-hover);
+  box-shadow:var(--shadow-sm);
+}
+
+/* 产品列表（升级网格、间距） */
+.product-list{
+  display:grid;
+  grid-template-columns:repeat(auto-fill, minmax(280px, 1fr));
+  gap:28px;
+}
+
+.product-item{
+  background:var(--bg-card);
+  border-radius:var(--radius-xl);
+  overflow:hidden;
+  box-shadow:var(--shadow-md);
+  border:1px solid var(--border-light);
+  transition:var(--transition-normal);
+  animation:fadeInUp 0.5s ease;
+}
+
+.product-item:hover{
+  transform:translateY(-6px);
+  box-shadow:var(--shadow-lg);
+}
+
+.product-img{
+  width:100%;
+  height:220px;
+  overflow:hidden;
+  position:relative;
+}
+
+.product-img img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  transition:var(--transition-slow);
+}
+
+.product-item:hover .product-img img{
+  transform:scale(1.08);
+}
+
+.product-tag{
+  position:absolute;
+  top:16px;
+  left:16px;
+  background:var(--primary-gradient);
+  color:white;
+  font-size:12px;
+  padding:6px 12px;
+  border-radius:var(--radius-sm);
+  font-weight:500;
+  box-shadow:0 2px 4px rgba(67,97,238,.3);
+}
+
+.product-info{
+  padding:20px;
+}
+
+.product-name{
+  font-size:17px;
+  color:var(--text-main);
+  font-weight:600;
+  margin-bottom:10px;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+.product-series{
+  font-size:13px;
+  color:var(--text-light);
+  margin-bottom:12px;
+}
+
+.product-price{
+  font-size:20px;
+  color:#e53e3e;
+  font-weight:600;
+  margin-bottom:12px;
+  background:linear-gradient(135deg, #e53e3e 0%, #d32f2f 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.product-desc{
+  font-size:14px;
+  color:var(--text-secondary);
+  line-height:1.6;
+  margin-bottom:20px;
+  height:44px;
+  overflow:hidden;
+  display:-webkit-box;
+  -webkit-line-clamp:2;
+  -webkit-box-orient:vertical;
+}
+
+.product-link{
+  display:block;
+  text-align:center;
+  padding:12px 0;
+  border-top:1px solid var(--border-light);
+  color:var(--primary);
+  font-size:14px;
+  text-decoration:none;
+  transition:var(--transition-fast);
+  font-weight:500;
+  position:relative;
+  overflow:hidden;
+}
+
+.product-link::before{
+  content:'';
+  position:absolute;
+  top:0;
+  left:-100%;
+  width:100%;
+  height:100%;
+  background:rgba(67,97,238,.05);
+  transition:var(--transition-normal);
+}
+
+.product-link:hover{
+  background:var(--bg-hover);
+  color:var(--primary-light);
+}
+
+.product-link:hover::before{
+  left:0;
+}
+
+/* 聊天区域（升级样式、动效） */
+.chat-container{
+  background:var(--bg-card);
+  border-radius:var(--radius-xl);
+  box-shadow:var(--shadow-md);
+  border:1px solid var(--border-light);
+  margin:40px 20px;
+  overflow:hidden;
+}
+
+.chat-header{
+  padding:20px;
+  border-bottom:1px solid var(--border-light);
+  display:flex;
+  align-items:center;
+  gap:10px;
+  background:linear-gradient(135deg, #f9f9f9 0%, #f5f5f5 100%);
+}
+
+.chat-header h3{
+  font-size:17px;
+  color:var(--text-main);
+  font-weight:600;
+}
+
+.chat-body{
+  height:420px;
+  overflow-y:auto;
+  padding:24px;
+  display:flex;
+  flex-direction:column;
+  gap:20px;
+  background:#fafafa;
+}
+
+.msg{
+  max-width:75%;
+  padding:14px 18px;
+  border-radius:var(--radius-lg);
+  line-height:1.7;
+  position:relative;
+  animation:scaleIn 0.3s ease;
+  box-shadow:var(--shadow-sm);
+}
+
+.msg-bot{
+  align-self:flex-start;
+  background:var(--bg-card);
+  color:var(--text-main);
+  border-radius:0 var(--radius-lg) var(--radius-lg) var(--radius-lg);
+  border-left:3px solid var(--primary);
+}
+
+.msg-user{
+  align-self:flex-end;
+  background:var(--primary-gradient);
+  color:white;
+  border-radius:var(--radius-lg) 0 var(--radius-lg) var(--radius-lg);
+}
+
+.chat-footer{
+  padding:20px;
+  border-top:1px solid var(--border-light);
+  display:flex;
+  gap:12px;
+  background:var(--bg-card);
+}
+
+.chat-input{
+  flex:1;
+  padding:14px 18px;
+  border:1px solid var(--border-normal);
+  border-radius:var(--radius-lg);
+  font-size:14px;
+  outline:none;
+  transition:var(--transition-fast);
+  resize:none;
+  height:52px;
+  max-height:120px;
+}
+
+.chat-input:focus{
+  border-color:var(--primary);
+  box-shadow:0 0 0 3px rgba(67,97,238,.1);
+}
+
+.chat-btn{
+  padding:14px 24px;
+  white-space:nowrap;
+}
+
+/* 底部信息（升级样式、布局） */
+.footer{
+  background:var(--bg-card);
+  padding:40px 0 20px;
+  border-top:1px solid var(--border-light);
+  margin-top:40px;
+}
+
+.footer-inner{
+  max-width:1200px;
+  margin:0 auto;
+  padding:0 20px;
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:space-between;
+  gap:32px;
+}
+
+.footer-contact{
+  flex:1;
+  min-width:280px;
+}
+
+.footer-contact h4{
+  font-size:17px;
+  color:var(--text-main);
+  margin-bottom:20px;
+  font-weight:600;
+  position:relative;
+  padding-bottom:8px;
+}
+
+.footer-contact h4::after{
+  content:'';
+  position:absolute;
+  bottom:0;
+  left:0;
+  width:40px;
+  height:2px;
+  background:var(--primary-gradient);
+  border-radius:var(--radius-sm);
+}
+
+.footer-contact p{
+  font-size:14px;
+  color:var(--text-secondary);
+  margin-bottom:12px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.footer-links{
+  flex:1;
+  min-width:280px;
+}
+
+.footer-links h4{
+  font-size:17px;
+  color:var(--text-main);
+  margin-bottom:20px;
+  font-weight:600;
+  position:relative;
+  padding-bottom:8px;
+}
+
+.footer-links h4::after{
+  content:'';
+  position:absolute;
+  bottom:0;
+  left:0;
+  width:40px;
+  height:2px;
+  background:var(--primary-gradient);
+  border-radius:var(--radius-sm);
+}
+
+.footer-links a{
+  display:block;
+  font-size:14px;
+  color:var(--text-secondary);
+  margin-bottom:12px;
+  text-decoration:none;
+  transition:var(--transition-fast);
+  padding:4px 0;
+  position:relative;
+  width:fit-content;
+}
+
+.footer-links a::after{
+  content:'';
+  position:absolute;
+  bottom:0;
+  left:0;
+  width:0;
+  height:1px;
+  background:var(--primary-gradient);
+  transition:var(--transition-fast);
+}
+
+.footer-links a:hover{
+  color:var(--primary);
+}
+
+.footer-links a:hover::after{
+  width:100%;
+}
+
+.copyright{
+  text-align:center;
+  padding:24px 0;
+  border-top:1px solid var(--border-light);
+  margin-top:20px;
+  font-size:13px;
+  color:var(--text-light);
+}
+
+/* 滚动条美化 */
+::-webkit-scrollbar {
+  width:8px;
+  height:8px;
+}
+
+::-webkit-scrollbar-track {
+  background:#f1f1f1;
+  border-radius:var(--radius-sm);
+}
+
+::-webkit-scrollbar-thumb {
+  background:#ddd;
+  border-radius:var(--radius-sm);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background:var(--primary-light);
+}
+
+/* 响应式调整（精细化适配） */
+@media (max-width:768px){
+  .header-inner{
+    flex-direction:column;
+    gap:16px;
+    padding:12px 20px;
+  }
+  
+  .header-nav{
+    margin-top:8px;
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:12px;
+  }
+  
+  .header-nav a{
+    margin:0;
+    padding:6px 12px;
+  }
+  
+  .form-group{
+    gap:12px;
+  }
+  
+  .form-control{
+    min-width:100%;
+  }
+  
+  .btn{
+    width:100%;
+    justify-content:center;
+  }
+  
+  .product-list{
+    grid-template-columns:repeat(auto-fill, minmax(100%, 1fr));
+    gap:20px;
+  }
+  
+  .product-img{
+    height:180px;
+  }
+  
+  .footer-inner{
+    flex-direction:column;
+    gap:32px;
+  }
+  
+  .chat-body{
+    height:300px;
+    padding:16px;
+  }
+  
+  .msg{
+    max-width:85%;
+  }
+  
+  .card{
+    margin:16px 16px 20px;
+    padding:20px;
+  }
+  
+  .btn-group{
+    margin:0 16px 24px;
+  }
+  
+  .product-section{
+    margin:24px 16px;
+  }
+  
+  .chat-container{
+    margin:24px 16px;
+  }
+}
+
+@media (max-width:480px){
+  .logo img{
+    width:48px;
+    height:48px;
+  }
+  
+  .logo-text h1{
+    font-size:20px;
+  }
+  
+  .card-title{
+    font-size:16px;
+  }
+  
+  .section-title{
+    font-size:20px;
+  }
+  
+  .product-info{
+    padding:16px;
+  }
+  
+  .chat-footer{
+    padding:16px;
+  }
+  
+  .chat-input{
+    padding:12px 16px;
+  }
+}
+</style>
+</head>
+<body>
+<!-- 头部（贴合官网风格，升级视觉） -->
+<div class="header">
+  <div class="header-inner">
+    <div class="logo">
+      <img src="images/logo.png" alt="博士有成logo">
+      <div class="logo-text">
+        <h1>博士有成</h1>
+        <p>专注儿童健康学习22年</p>
+      </div>
+    </div>
+    <div class="header-nav">
+      <a href="https://www.bs-yc.com/" target="_blank">官网首页</a>
+      <a href="https://www.bs-yc.com/product/" target="_blank">全产品库</a>
+      <a href="https://www.bs-yc.com/store/" target="_blank">门店查询</a>
+      <a href="https://www.bs-yc.com/news/" target="_blank">品牌动态</a>
+      <a href="tel:400-188-6788">400-188-6788</a>
+    </div>
+  </div>
+</div>
+
+<!-- 核心功能区 -->
+<div class="card">
+  <h3 class="card-title"><i>📏</i> 身高/年龄 → 专属桌椅高度</h3>
+  <div class="form-group">
+    <input type="number" id="age" class="form-control" placeholder="孩子年龄（岁）">
+    <input type="number" id="height" class="form-control" placeholder="孩子身高（cm）">
+    <button class="btn" onclick="calHeight()"><i>📌</i> 立即匹配</button>
+  </div>
+  <div class="result" id="heightResult"></div>
+</div>
+
+<div class="card">
+  <h3 class="card-title"><i>💰</i> 预算推荐 → 精准选品</h3>
+  <div class="form-group">
+    <input type="number" id="money" class="form-control" placeholder="您的预算（元）">
+    <button class="btn" onclick="calBudget()"><i>🎯</i> 立即推荐</button>
+  </div>
+  <div class="result" id="budgetResult"></div>
+</div>
+
+<!-- 快速咨询按钮组 -->
+<div class="btn-group">
+  <button class="category-btn" onclick="showCategory('product')"><i>📦</i> 全产品系列</button>
+  <button class="category-btn" onclick="showCategory('advantage')"><i>🏆</i> 品牌优势</button>
+  <button class="category-btn" onclick="showCategory('after-sales')"><i>🛠️</i> 售后服务</button>
+  <button class="category-btn" onclick="showCategory('activity')"><i>🎁</i> 最新活动</button>
+  <button class="category-btn" onclick="showCategory('store')"><i>📍</i> 门店查询</button>
+  <button class="category-btn" onclick="showCategory('policy')"><i>📋</i> 国补政策</button>
+</div>
+
+<!-- 产品展示区 -->
+<div class="product-section">
+  <h2 class="section-title">全系列在售产品</h2>
+  <div class="product-filter">
+    <button class="filter-btn active" onclick="filterProduct('all')">全部产品</button>
+    <button class="filter-btn" onclick="filterProduct('ai')">AI智能系列</button>
+    <button class="filter-btn" onclick="filterProduct('solidwood')">实木系列</button>
+    <button class="filter-btn" onclick="filterProduct('electric')">电动系列</button>
+    <button class="filter-btn" onclick="filterProduct('budget')">高性价比</button>
+  </div>
+  <div class="product-list" id="productList">
+    <!-- 产品项1：管小宝120B -->
+    <div class="product-item" data-category="ai">
+      <div class="product-img">
+        <span class="product-tag">AI智能</span>
+        <img src="images/product1.jpg" alt="管小宝120B">
+      </div>
+      <div class="product-info">
+        <h4 class="product-name">管小宝120B</h4>
+        <div class="product-series">管系列（AI智能）</div>
+        <div class="product-price">¥2999-3299</div>
+        <p class="product-desc">AI智能正姿管家+E0级欧松板+手摇升降，入门级护脊防近视学习桌</p>
+        <a href="https://www.bs-yc.com/product/guanxiaobao120b.html" target="_blank" class="product-link">查看详情</a>
+      </div>
+    </div>
+    <!-- 产品项2：管小优120B/120S -->
+    <div class="product-item" data-category="ai">
+      <div class="product-img">
+        <span class="product-tag">AI智能</span>
+        <img src="images/product2.jpg" alt="管小优120B/120S">
+      </div>
+      <div class="product-info">
+        <h4 class="product-name">管小优120B/120S</h4>
+        <div class="product-series">管系列（AI智能）</div>
+        <div class="product-price">¥4399-4699</div>
+        <p class="product-desc">AI语音控+灯桌一体+加宽桌面，智能监测坐姿，全龄段成长适配</p>
+        <a href="https://www.bs-yc.com/product/guanxiaoyou120b.html" target="_blank" class="product-link">查看详情</a>
+      </div>
+    </div>
+    <!-- 产品项3：耶鲁12002 PRO -->
+    <div class="product-item" data-category="budget">
+      <div class="product-img">
+        <span class="product-tag">旗舰稳固</span>
+        <img src="images/product3.jpg" alt="耶鲁12002 PRO">
+      </div>
+      <div class="product-info">
+        <h4 class="product-name">耶鲁12002 PRO</h4>
+        <div class="product-series">耶鲁系列（旗舰稳固）</div>
+        <div class="product-price">¥6499-6799</div>
+        <p class="product-desc">手摇+液压双升降+宝钢2.0支架+加宽桌面，承重强、久坐稳固不晃动</p>
+        <a href="https://www.bs-yc.com/product/yale12002pro.html" target="_blank" class="product-link">查看详情</a>
+      </div>
+    </div>
+    <!-- 产品项4：常青藤·森语12001 -->
+    <div class="product-item" data-category="solidwood">
+      <div class="product-img">
+        <span class="product-tag">实木高端</span>
+        <img src="images/product4.jpg" alt="常青藤·森语12001">
+      </div>
+      <div class="product-info">
+        <h4 class="product-name">常青藤·森语12001</h4>
+        <div class="product-series">常青藤系列（实木高端）</div>
+        <div class="product-price">¥7999-8299</div>
+        <p class="product-desc">进口橡胶木实木+灯桌一体+四层书架，环保无异味，收纳空间拉满</p>
+        <a href="https://www.bs-yc.com/product/changqingtengshenyu12001.html" target="_blank" class="product-link">查看详情</a>
+      </div>
+    </div>
+    <!-- 产品项5：常青藤12003-S榉木款 -->
+    <div class="product-item" data-category="solidwood">
+      <div class="product-img">
+        <span class="product-tag">实木高端</span>
+        <img src="images/product5.jpg" alt="常青藤12003-S榉木款">
+      </div>
+      <div class="product-info">
+        <h4 class="product-name">常青藤12003-S榉木款</h4>
+        <div class="product-series">常青藤系列（实木高端）</div>
+        <div class="product-price">¥7299-7599</div>
+        <p class="product-desc">北美进口榉木+可涂鸦桌面+双升降，耐磨耐刮，成人也可使用</p>
+        <a href="https://www.bs-yc.com/product/changqingteng12003s.html" target="_blank" class="product-link">查看详情</a>
+      </div>
+    </div>
+    <!-- 产品项6：常青藤·魔法师 -->
+    <div class="product-item" data-category="solidwood">
+      <div class="product-img">
+        <span class="product-tag">实木创新</span>
+        <img src="images/product6.jpg" alt="常青藤·魔法师">
+      </div>
+      <div class="product-info">
+        <h4 class="product-name">常青藤·魔法师</h4>
+        <div class="product-series">常青藤系列（实木创新）</div>
+        <div class="product-price">¥6899-7199</div>
+        <p class="product-desc">实木多功能设计+灵活收纳+人体工学倾角，兼顾学习与娱乐</p>
+        <a href="https://www.bs-yc.com/product/changqingtengmofashi.html" target="_blank" class="product-link">查看详情</a>
+      </div>
+    </div>
+    <!-- 产品项7：博士12001电动款 -->
+    <div class="product-item" data-category="electric">
+      <div class="product-img">
+        <span class="product-tag">电动智能</span>
+        <img src="images/product7.jpg" alt="博士12001电动款">
+      </div>
+      <div class="product-info">
+        <h4 class="product-name">博士12001电动款</h4>
+        <div class="product-series">博士系列（电动智能）</div>
+        <div class="product-price">¥5299-5599</div>
+        <p class="product-desc">一键电动升降+静音操控+大桌面，适配青少年至成人全阶段</p>
+        <a href="https://www.bs-yc.com/product/boshi12001electric.html" target="_blank" class="product-link">查看详情</a>
+      </div>
+    </div>
+    <!-- 产品项8：博士优加12001 -->
+    <div class="product-item" data-category="electric">
+      <div class="product-img">
+        <span class="product-tag">电动升级</span>
+        <img src="images/product8.jpg" alt="博士优加12001">
+      </div>
+      <div class="product-info">
+        <h4 class="product-name">博士优加12001</h4>
+        <div class="product-series">博士系列（经典升级）</div>
+        <div class="product-price">¥4699-4999</div>
+        <p class="product-desc">升级环保板材+加固支架+多功能收纳，性价比款电动学习桌</p>
+        <a href="https://www.bs-yc.com/product/boshiyoujia12001.html" target="_blank" class="product-link">查看详情</a>
+      </div>
+    </div>
+    <!-- 产品项9：剑桥12001 -->
+    <div class="product-item" data-category="budget">
+      <div class="product-img">
+        <span class="product-tag">简约实用</span>
+        <img src="images/product9.jpg" alt="剑桥12001">
+      </div>
+      <div class="product-info">
+        <h4 class="product-name">剑桥12001</h4>
+        <div class="product-series">剑桥系列（简约实用）</div>
+        <div class="product-price">¥4199-4499</div>
+        <p class="product-desc">马卡龙色系+手摇升降+读写分离，颜值高，适合中小户型</p>
+        <a href="https://www.bs-yc.com/product/jianqiao12001.html" target="_blank" class="product-link">查看详情</a>
+      </div>
+    </div>
+    <!-- 产品项10：剑桥1411双位款 -->
+    <div class="product-item" data-category="budget">
+      <div class="product-img">
+        <span class="product-tag">二胎专属</span>
+        <img src="images/product10.jpg" alt="剑桥1411双位款">
+      </div>
+      <div class="product-info">
+        <h4 class="product-name">剑桥1411双位款</h4>
+        <div class="product-series">剑桥系列（多功能）</div>
+        <div class="product-price">¥5699-5999</div>
+        <p class="product-desc">双人双桌面设计+独立升降调节，二胎家庭专属，空间利用率高</p>
+        <a href="https://www.bs-yc.com/product/jianqiao1411double.html" target="_blank" class="product-link">查看详情</a>
+      </div>
+    </div>
+    <!-- 产品项11：哈佛12008轻盈版 -->
+    <div class="product-item" data-category="budget">
+      <div class="product-img">
+        <span class="product-tag">小户型首选</span>
+        <img src="images/product11.jpg" alt="哈佛12008轻盈版">
+      </div>
+      <div class="product-info">
+        <h4 class="product-name">哈佛12008轻盈版</h4>
+        <div class="product-series">哈佛系列（亲民性价比）</div>
+        <div class="product-price">¥4099-4399</div>
+        <p class="product-desc">轻量化设计+环保板材+基础升降，小户型首选，价格亲民易安装</p>
+        <a href="https://www.bs-yc.com/product/hafu12008light.html" target="_blank" class="product-link">查看详情</a>
+      </div>
+    </div>
+    <!-- 产品项12：哈佛12007L -->
+    <div class="product-item" data-category="budget">
+      <div class="product-img">
+        <span class="product-tag">基础实用</span>
+        <img src="images/product12.jpg" alt="哈佛12007L">
+      </div>
+      <div class="product-info">
+        <h4 class="product-name">哈佛12007L</h4>
+        <div class="product-series">哈佛系列（基础实用）</div>
+        <div class="product-price">¥3899-4199</div>
+        <p class="product-desc">简约框架+多层收纳+稳定升降，满足日常读写，预算友好款</p>
+        <a href="https://www.bs-yc.com/product/hafu12007l.html" target="_blank" class="product-link">查看详情</a>
+      </div>
+    </div>
+    <!-- 产品项13：太空一号AI智能款 -->
+    <div class="product-item" data-category="ai">
+      <div class="product-img">
+        <span class="product-tag">顶配智能</span>
+        <img src="images/product13.jpg" alt="太空一号AI智能款">
+      </div>
+      <div class="product-info">
+        <h4 class="product-name">太空一号AI智能款</h4>
+        <div class="product-series">太空系列（顶配智能）</div>
+        <div class="product-price">¥8999-9299</div>
+        <p class="product-desc">AI语音交互+远程督学+坐姿抓拍，小程序联动，智能护脊天花板</p>
+        <a href="https://www.bs-yc.com/product/taikongyhaoai.html" target="_blank" class="product-link">查看详情</a>
+      </div>
+    </div>
+    <!-- 产品项14：公益新秀12003 -->
+    <div class="product-item" data-category="budget">
+      <div class="product-img">
+        <span class="product-tag">公益普惠</span>
+        <img src="images/product14.jpg" alt="公益新秀12003">
+      </div>
+      <div class="product-info">
+        <h4 class="product-name">公益新秀12003</h4>
+        <div class="product-series">公益系列（普惠款）</div>
+        <div class="product-price">¥2699-2999</div>
+        <p class="product-desc">基础升降+环保材质+简约设计，公益补贴价，适合校园家庭两用</p>
+        <a href="https://www.bs-yc.com/product/gongyixinxiu12003.html" target="_blank" class="product-link">查看详情</a>
+      </div>
+    </div>
+    <!-- 产品项15：优享辰光12001 -->
+    <div class="product-item" data-category="budget">
+      <div class="product-img">
+        <span class="product-tag">简约轻奢</span>
+        <img src="images/product15.jpg" alt="优享辰光12001">
+      </div>
+      <div class="product-info">
+        <h4 class="product-name">优享辰光12001</h4>
+        <div class="product-series">优享系列（简约轻奢）</div>
+        <div class="product-price">¥4899-5199</div>
+        <p class="product-desc">极简外观+柔光护眼+顺滑升降，适配现代家装，颜值与实力并存</p>
+        <a href="https://www.bs-yc.com/product/youxiangchenguang12001.html" target="_blank" class="product-link">查看详情</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 智能客服聊天区 -->
+<div class="chat-container">
+  <div class="chat-header">
+    <h3>智能客服咨询</h3>
+  </div>
+  <div class="chat-body" id="chatBody">
+    <div class="msg msg-bot">您好！我是博士有成智能顾问，有任何产品咨询、价格疑问或售后问题，都可以告诉我哦~</div>
+  </div>
+  <div class="chat-footer">
+    <textarea id="chatInput" class="chat-input" placeholder="请输入您的问题..."></textarea>
+    <button class="btn chat-btn" onclick="sendChat()"><i>发送</i></button>
+  </div>
+</div>
+
+<!-- 底部信息 -->
+<div class="footer">
+  <div class="footer-inner">
+    <div class="footer-contact">
+      <h4>联系我们</h4>
+      <p><i>📞</i> 全国服务热线：400-188-6788</p>
+      <p><i>⏰</i> 工作时间：9:00-22:00（全年无休）</p>
+      <p><i>📍</i> 总部地址：广东省东莞市凤岗镇都市智谷</p>
+      <p><i>🌐</i> 官方官网：https://www.bs-yc.com/</p>
+    </div>
+    <div class="footer-links">
+      <h4>快速链接</h4>
+      <a href="https://www.bs-yc.com/product/" target="_blank">全系列产品</a>
+      <a href="https://www.bs-yc.com/store/" target="_blank">全国门店查询</a>
+      <a href="https://www.bs-yc.com/news/" target="_blank">品牌动态</a>
+      <a href="https://www.bs-yc.com/about/" target="_blank">关于我们</a>
+      <a href="https://www.bs-yc.com/service/" target="_blank">售后服务</a>
+      <a href="https://www.bs-yc.com/join/" target="_blank">招商加盟</a>
+    </div>
+    <div class="footer-links">
+      <h4>微信小程序</h4>
+      <p style="color:var(--text-secondary);font-size:14px;margin-bottom:12px">微信搜索以下小程序</p>
+      <img src="images/miniprogram.jpg" alt="小程序二维码" style="width:120px;height:120px;border-radius:var(--radius-md);box-shadow:var(--shadow-sm)">
+    </div>
+  </div>
+  <div class="copyright">
+    © 2026 东莞市博士有成家具有限公司 版权所有 粤ICP备12345678号
+  </div>
+</div>
+
+<script>
+// 桌椅高度计算（基于3931科学坐姿标准）
+function calHeight(){
+  const a=parseInt(document.getElementById('age').value)
+  const h=parseInt(document.getElementById('height').value)
+  const r=document.getElementById('heightResult')
+  
+  // 加载状态
+  r.innerHTML='<div style="text-align:center;padding:10px;"><span style="animation:pulse 1.5s infinite;">正在计算...</span></div>'
+  r.style.display='block'
+  
+  setTimeout(() => {
+    if(!a||!h||a<3||a>18||h<90||h>180){
+      r.innerHTML='⚠️ 请输入 3–18岁、90–180cm 有效范围<br/>💡 博士有成学习桌支持520-900mm无级升降，适配全年龄段成长需求'
+      r.style.display='block'
+      return
+    }
+    const desk=Math.round(h*0.45)
+    const chair=Math.round(h*0.275)
+    r.innerHTML=`🎯 3931科学坐姿推荐高度<br/>📐 桌面高度：${desk}cm（可精准调节）<br/>🪑 椅面高度：${chair}cm（含脚踏适配）<br/>✅ 符合人体工学设计，有效预防驼背和近视`
+    r.style.display='block'
+  }, 600);
+}
+
+// 预算推荐（基于最新产品价格）
+function calBudget(){
+  const b=parseInt(document.getElementById('money').value)
+  const r=document.getElementById('budgetResult')
+  
+  // 加载状态
+  r.innerHTML='<div style="text-align:center;padding:10px;"><span style="animation:pulse 1.5s infinite;">正在匹配...</span></div>'
+  r.style.display='block'
+  
+  setTimeout(() => {
+    if(!b||b<2000||b>10000){
+      r.innerHTML='⚠️ 请输入 2000–10000 元预算范围<br/>💡 博士有成产品覆盖2699-9299元价格带，满足不同需求'
+      r.style.display='block'
+      return
+    }
+    let txt=''
+    if(b<=3500){
+      txt='✅ 预算优选推荐（2699-3299元）<br/>• 公益新秀12003（2699-2999元）：公益补贴款，基础升降+环保材质<br/>• 管小宝120B（2999-3299元）：AI正姿入门款，护脊防近视核心功能<br/>• 亮点：性价比高，适合预算有限家庭，全国免费安装'
+    }else if(b<=5000){
+      txt='✅ 人气爆款推荐（3899-4999元）<br/>• 哈佛12007L（3899-4199元）：基础实用款，多层收纳+稳定升降<br/>• 剑桥12001（4199-4499元）：马卡龙色系，适合中小户型<br/>• 博士优加12001（4699-4999元）：电动升降+升级环保板材<br/>• 亮点：功能均衡，颜值与实用性兼具'
+    }else if(b<=7500){
+      txt='✅ 旗舰品质推荐（5699-7599元）<br/>• 剑桥1411双位款（5699-5999元）：二胎家庭专属，双人双桌面<br/>• 耶鲁12002 PRO（6499-6799元）：双升降+宝钢支架，稳固耐用<br/>• 常青藤·魔法师（6899-7199元）：实木材质+多功能设计<br/>• 常青藤12003-S榉木款（7299-7599元）：北美进口榉木，耐磨耐刮<br/>• 亮点：材质升级，适合长期使用'
+    }else{
+      txt='✅ 高端智能推荐（7999-9299元）<br/>• 常青藤·森语12001（7999-8299元）：进口橡胶木+四层书架，收纳拉满<br/>• 太空一号AI智能款（8999-9299元）：AI语音交互+远程督学，智能天花板<br/>• 亮点：顶级配置，适合追求高端体验和智能功能的家庭'
+    }
+    r.innerHTML=txt
+    r.style.display='block'
+  }, 600);
+}
+
+// 产品筛选功能
+function filterProduct(type){
+  const buttons=document.querySelectorAll('.filter-btn')
+  buttons.forEach(btn=>btn.classList.remove('active'))
+  document.querySelector(`.filter-btn[onclick="filterProduct('${type}')"]`).classList.add('active')
+  
+  const products=document.querySelectorAll('.product-item')
+  // 先添加加载动效
+  products.forEach(product=>{
+    product.style.opacity=0.5
+    product.style.transform='scale(0.98)'
+    product.style.transition='0.2s ease'
+  })
+  
+  setTimeout(() => {
+    products.forEach(product=>{
+      if(type==='all'){
+        product.style.display='block'
+      }else{
+        product.dataset.category===type?product.style.display='block':product.style.display='none'
+      }
+      // 恢复样式
+      product.style.opacity=1
+      product.style.transform='scale(1)'
+    })
+  }, 300);
+}
+
+// 分类内容展示（点击顶部按钮）
+function showCategory(type){
+  // 滚动到对应区域
+  if(type==='product'){
+    document.querySelector('.product-section').scrollIntoView({behavior:'smooth', block:'start'})
+  }else if(type==='store'){
+    window.open('https://www.bs-yc.com/store/', '_blank')
+  }else if(type==='activity'){
+    window.open('https://www.bs-yc.com/news/activity/', '_blank')
+  }else{
+    // 其他分类显示弹窗（美化弹窗样式）
+    let title=''
+    let content=''
+    if(type==='advantage'){
+      title='品牌核心优势'
+      content='• 深耕行业22年，儿童学习桌国标起草单位\n• 3931科学坐姿体系，护脊防近视专业设计\n• 优于E0级环保板材，甲醛释放量＜0.03mg/L\n• 全龄段升降调节，一桌可用15年以上\n• 全国1000+服务网点，3年质保+终身维护'
+    }else if(type==='after-sales'){
+      title='售后服务保障'
+      content='• 质保政策：桌椅套装3年质保，终身维护\n• 安装服务：全国大部分地区免费上门安装调试\n• 售后热线：400-188-6788（9:00-22:00）\n• 配件支持：终身提供原装配件更换\n• 维修响应：48小时内上门服务（市区）'
+    }else if(type==='policy'){
+      title='国补政策详情'
+      content='• 补贴对象：全国购买博士有成学习桌的消费者\n• 补贴力度：根据产品型号补贴100-500元不等\n• 申请方式：线下门店直接抵扣，线上下单自动叠加\n• 活动时间：长期有效（以官网最新通知为准）\n• 咨询方式：拨打400-188-6788了解具体型号补贴金额'
+    }
+    
+    // 美化alert（模拟弹窗）
+    const alertDiv=document.createElement('div')
+    alertDiv.style.cssText=`
+      position:fixed;
+      top:50%;
+      left:50%;
+      transform:translate(-50%, -50%);
+      background:white;
+      padding:24px;
+      border-radius:12px;
+      box-shadow:0 8px 24px rgba(0,0,0,.15);
+      max-width:85%;
+      width:400px;
+      z-index:9999;
+      animation:scaleIn 0.3s ease;
+    `
+    alertDiv.innerHTML=`
+      <h3 style="font-size:18px;margin-bottom:16px;color:#222;font-weight:600;">${title}</h3>
+      <p style="font-size:14px;color:#666;line-height:1.8;">${content.replace(/\n/g, '<br/>')}</p>
+      <button onclick="this.parentElement.remove()" style="margin-top:20px;padding:8px 20px;background:linear-gradient(135deg, #4361ee 0%, #3a58d8 100%);color:white;border:none;border-radius:6px;cursor:pointer;font-size:14px;">关闭</button>
+    `
+    const overlay=document.createElement('div')
+    overlay.style.cssText=`
+      position:fixed;
+      top:0;
+      left:0;
+      width:100%;
+      height:100%;
+      background:rgba(0,0,0,.5);
+      z-index:9998;
+      animation:fadeInUp 0.3s ease;
+    `
+    overlay.onclick=()=>{
+      alertDiv.remove()
+      overlay.remove()
+    }
+    document.body.appendChild(overlay)
+    document.body.appendChild(alertDiv)
+  }
+}
+
+// 聊天功能
+function sendChat(){
+  const input=document.getElementById('chatInput')
+  const msg=input.value.trim()
+  if(!msg)return
+  
+  const chatBody=document.getElementById('chatBody')
+  // 添加用户消息
+  chatBody.innerHTML+=`<div class="msg msg-user">${msg.replace(/\n/g, '<br/>')}</div>`
+  input.value=''
+  
+  // 滚动到最新消息
+  chatBody.scrollTop=chatBody.scrollHeight
+  
+  // 智能回复逻辑
+  let reply=''
+  if(msg.includes('管小宝')){
+    reply='管小宝120B是AI智能入门款（2999-3299元），核心功能：AI智能正姿管家+E0级欧松板+手摇升降，适合3-12岁儿童，是护脊防近视的高性价比选择，点击产品卡片可查看详情~'
+  }else if(msg.includes('常青藤')&&msg.includes('实木')){
+    reply='常青藤系列均采用进口实木材质，包括橡胶木和北美榉木，环保等级超E0级，无异味更安全。代表型号：森语12001（7999-8299元）、魔法师（6899-7199元）、12003-S榉木款（7299-7599元），点击产品卡片可查看具体参数~'
+  }else if(msg.includes('电动')){
+    reply='博士系列电动款包括：博士12001电动款（5299-5599元）、博士优加12001（4699-4999元），均支持一键电动升降+静音操控，适配青少年至成人全阶段，适合追求便捷操作的家庭~'
+  }else if(msg.includes('国补')||msg.includes('补贴')){
+    reply='国补政策面向全国消费者，购买博士有成学习桌可享100-500元补贴，线下门店直接抵扣，线上下单自动叠加，具体补贴金额因产品型号而异，拨打400-188-6788可咨询详情~'
+  }else if(msg.includes('安装')){
+    reply='博士有成提供全国大部分地区免费上门安装服务，下单后会有工作人员联系预约安装时间，安装完成后会进行调试指导，确保正常使用~'
+  }else if(msg.includes('质保')){
+    reply='博士有成桌椅套装享受3年质保+终身维护服务，质保期内非人为损坏可免费维修更换，终身提供原装配件支持，售后热线400-188-6788~'
+  }else if(msg.includes('门店')){
+    reply='博士有成在全国300+城市拥有1000+服务网点，可点击顶部"门店查询"导航或访问官网门店页面（https://www.bs-yc.com/store/），输入所在城市即可查询就近门店地址和联系方式~'
+  }else{
+    reply='感谢您的咨询！如需了解更多详情，可：① 点击顶部产品卡片查看具体产品信息；② 拨打全国服务热线400-188-6788；③ 访问官方官网https://www.bs-yc.com/；④ 直接描述具体需求（如产品型号、功能咨询等），我会为您详细解答~'
+  }
+  
+  // 模拟回复延迟
+  setTimeout(()=>{
+    chatBody.innerHTML+=`<div class="msg msg-bot">${reply}</div>`
+    chatBody.scrollTop=chatBody.scrollHeight
+  },800)
+}
+
+// 回车发送聊天消息（支持换行）
+document.getElementById('chatInput').addEventListener('keydown',(e)=>{
+  if(e.key==='Enter' && !e.shiftKey){
+    e.preventDefault()
+    sendChat()
+  }
+})
+
+// 页面加载完成后执行
+window.onload=function(){
+  // 修复所有图片加载问题（包括产品图、logo、小程序码）
+  const allImages = document.querySelectorAll('img'); // 选择所有图片
+  allImages.forEach(img=>{
+    // 强制显示图片，取消淡入延迟（避免白屏）
+    img.style.opacity = 1;
+    img.style.transition = 'none'; // 暂时关闭过渡动画，优先保证显示
+    
+    // 图片加载失败时，直接显示带文字的占位图（明确对应产品）
+    img.onerror = function() {
+      // 根据图片alt属性生成对应占位图，方便排查
+      this.src = `https://via.placeholder.com/280x220?text=${this.alt}`;
+      this.style.opacity = 1;
+      console.log('图片加载失败：', this.src, '→ 替换为占位图'); // 控制台提示问题
+    };
+  });
+
+  // 页面入场动画
+  document.body.style.opacity=0
+  document.body.style.transition='opacity 0.5s ease'
+  setTimeout(()=>{
+    document.body.style.opacity=1
+  }, 100)
+}
+
+// 平滑滚动全局配置
+document.documentElement.style.scrollBehavior='smooth'
+</script>
+</body>
+</html>
