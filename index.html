@@ -2,41 +2,34 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="format-detection" content="telephone=yes">
-<meta name="format-detection" content="address=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
 <title>博士有成智能客服</title>
 <style>
 /* 全局样式重置与基础配置 */
 :root {
   --primary: #4361ee;
   --primary-light: #5a74f0;
-  --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  --primary-gradient: linear-gradient(135deg, #4361ee 0%, #3a58d8 100%);
   --secondary: #7b61ff;
-  --accent: #f093fb;
-  --accent-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-  --text-main: #1a1a2e;
-  --text-secondary: #4a4a68;
+  --text-main: #222;
+  --text-secondary: #666;
   --text-light: #999;
-  --bg-main: #f0f2f5;
+  --bg-main: #f9f9f9;
   --bg-card: #ffffff;
-  --bg-hover: #f9faff;
-  --border-light: #e8e8ef;
-  --border-normal: #d0d0d8;
-  --border-focus: #667eea;
-  --shadow-sm: 0 2px 12px rgba(102,126,234,.08);
-  --shadow-md: 0 8px 24px rgba(102,126,234,.12);
-  --shadow-lg: 0 16px 48px rgba(102,126,234,.18);
-  --shadow-xl: 0 24px 60px rgba(102,126,234,.22);
-  --radius-sm: 8px;
-  --radius-md: 12px;
-  --radius-lg: 16px;
-  --radius-xl: 24px;
-  --transition-fast: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-  --transition-normal: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  --transition-slow: 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  --bg-hover: #f9fbff;
+  --border-light: #f0f0f0;
+  --border-normal: #e0e0e0;
+  --border-focus: #4361ee;
+  --shadow-sm: 0 2px 8px rgba(0,0,0,.04);
+  --shadow-md: 0 4px 12px rgba(0,0,0,.06);
+  --shadow-lg: 0 8px 24px rgba(0,0,0,.08);
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --radius-xl: 12px;
+  --transition-fast: 0.2s ease;
+  --transition-normal: 0.3s ease;
+  --transition-slow: 0.5s ease;
 }
 
 *{
@@ -95,17 +88,16 @@ body{
   100% { background-position: -200% 0; }
 }
 
-/* 头部样式（玻璃拟态+渐变） */
+/* 头部样式（升级渐变+质感） */
 .header{
-  background:rgba(255,255,255,.75);
-  backdrop-filter:blur(20px);
-  -webkit-backdrop-filter:blur(20px);
+  background:var(--bg-card);
   padding:16px 0;
-  border-bottom:1px solid rgba(255,255,255,.3);
+  padding-top:calc(16px + env(safe-area-inset-top));
+  border-bottom:1px solid var(--border-light);
   position:sticky;
   top:0;
   z-index:999;
-  box-shadow:0 4px 30px rgba(0,0,0,.05);
+  box-shadow:var(--shadow-sm);
 }
 
 .header-inner{
@@ -181,16 +173,194 @@ body{
   width:100%;
 }
 
-/* 核心功能卡片（玻璃拟态+渐变） */
+/* 顶部横幅 */
+.banner{
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #6B8DD6 100%);
+  padding: 40px 20px;
+  padding-top: calc(40px + env(safe-area-inset-top));
+  color: white;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.banner::before{
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%);
+  animation: bannerGlow 8s ease-in-out infinite;
+}
+
+.banner::after{
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 60"><path fill="%23ffffff" fill-opacity="0.1" d="M0,32L48,37.3C96,43,192,53,288,53.3C384,53,480,43,576,35.3C672,27,768,21,864,21.3C960,21,1056,27,1152,32C1248,37,1344,43,1392,45.3L1440,48L1440,60L1392,60C1344,60,1248,60,1152,60C1056,60,960,60,864,60C768,60,672,60,576,60C480,60,384,60,288,60C192,60,96,60,48,60L0,60Z"></path></svg>') no-repeat bottom;
+  background-size: cover;
+}
+
+@keyframes bannerGlow {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(-5%, 5%); }
+}
+
+.banner-content{
+  position: relative;
+  z-index: 1;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.banner-tag{
+  display: inline-block;
+  background: linear-gradient(90deg, #ffd700, #ffaa00);
+  color: #333;
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  animation: pulse 2s infinite;
+  box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4);
+}
+
+.banner h1{
+  font-size: 36px;
+  margin-bottom: 12px;
+  font-weight: 800;
+  line-height: 1.3;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+}
+
+.banner p{
+  font-size: 16px;
+  opacity: 0.95;
+  margin-bottom: 24px;
+  font-weight: 500;
+  letter-spacing: 1px;
+}
+
+.banner-buttons{
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 28px;
+}
+
+.banner-btn{
+  padding: 14px 32px;
+  border-radius: 30px;
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.banner-btn-primary{
+  background: white;
+  color: #667eea;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+.banner-btn-primary:hover{
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+}
+
+.banner-btn-secondary{
+  background: rgba(255,255,255,0.2);
+  color: white;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,0.3);
+}
+
+.banner-btn-secondary:hover{
+  background: rgba(255,255,255,0.3);
+  transform: translateY(-3px);
+}
+
+.banner-stats{
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  margin-top: 24px;
+  padding-top: 24px;
+  position: relative;
+}
+
+.banner-stats::before{
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent);
+}
+
+.banner-stat{
+  text-align: center;
+}
+
+.banner-stat-num{
+  font-size: 32px;
+  font-weight: 800;
+  display: block;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+  margin-bottom: 4px;
+}
+
+.banner-stat-label{
+  font-size: 13px;
+  opacity: 0.9;
+}
+
+@media (max-width:768px){
+  .banner{
+    padding: 30px 16px;
+    padding-top: calc(30px + env(safe-area-inset-top));
+  }
+  .banner h1{
+    font-size: 26px;
+  }
+  .banner p{
+    font-size: 14px;
+  }
+  .banner-buttons{
+    gap: 10px;
+  }
+  .banner-btn{
+    padding: 12px 24px;
+    font-size: 14px;
+  }
+  .banner-stats{
+    gap: 20px;
+  }
+  .banner-stat-num{
+    font-size: 24px;
+  }
+  .banner-stat-label{
+    font-size: 12px;
+  }
+}
+
+/* 核心功能卡片（升级渐变、光影、动效） */
 .card{
-  background:rgba(255,255,255,.85);
-  backdrop-filter:blur(20px);
-  -webkit-backdrop-filter:blur(20px);
+  background:var(--bg-card);
   border-radius:var(--radius-xl);
   padding:28px;
-  margin:20px 24px 24px;
+  margin:20px 20px 24px;
   box-shadow:var(--shadow-md);
-  border:1px solid rgba(255,255,255,.5);
+  border:1px solid var(--border-light);
   transition:var(--transition-normal);
   position:relative;
   overflow:hidden;
@@ -201,15 +371,14 @@ body{
   position:absolute;
   top:0;
   left:0;
-  right:0;
+  width:100%;
   height:4px;
   background:var(--primary-gradient);
 }
 
 .card:hover{
   box-shadow:var(--shadow-lg);
-  transform:translateY(-4px);
-  border-color:rgba(102,126,234,.2);
+  transform:translateY(-2px);
 }
 
 .card-title{
@@ -634,6 +803,7 @@ body{
 .footer{
   background:var(--bg-card);
   padding:40px 0 20px;
+  padding-bottom:calc(20px + env(safe-area-inset-bottom));
   border-top:1px solid var(--border-light);
   margin-top:40px;
 }
@@ -741,10 +911,65 @@ body{
 .copyright{
   text-align:center;
   padding:24px 0;
+  padding-bottom:calc(24px + env(safe-area-inset-bottom));
   border-top:1px solid var(--border-light);
   margin-top:20px;
   font-size:13px;
   color:var(--text-light);
+}
+
+/* 底部导航栏 */
+.bottom-nav{
+  display:none;
+  position:fixed;
+  bottom:0;
+  left:0;
+  right:0;
+  background:var(--bg-card);
+  border-top:1px solid var(--border-light);
+  padding:8px 0;
+  padding-bottom:calc(8px + env(safe-area-inset-bottom));
+  z-index:1000;
+  box-shadow:0 -2px 8px rgba(0,0,0,.06);
+}
+
+.bottom-nav-inner{
+  display:flex;
+  justify-content:space-around;
+  align-items:center;
+}
+
+.bottom-nav-item{
+  flex:1;
+  text-align:center;
+  padding:8px 4px;
+  color:var(--text-secondary);
+  text-decoration:none;
+  font-size:12px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:4px;
+  cursor:pointer;
+}
+
+.bottom-nav-item i{
+  font-size:20px;
+  font-style:normal;
+}
+
+.bottom-nav-item.active{
+  color:var(--primary);
+}
+
+/* 显示底部导航栏（移动端） */
+@media (max-width:768px){
+  .bottom-nav{
+    display:block;
+  }
+  body{
+    padding-bottom:60px;
+  }
 }
 
 /* 滚动条美化 */
@@ -769,58 +994,23 @@ body{
 
 /* 响应式调整（精细化适配） */
 @media (max-width:768px){
-  body{
-    padding:0;
-    max-width:100%;
-  }
-  
-  .header{
-    padding:12px 0;
-  }
-  
   .header-inner{
     flex-direction:column;
-    gap:12px;
-    padding:0 16px;
-  }
-  
-  .logo{
-    gap:10px;
-  }
-  
-  .logo img{
-    width:44px;
-    height:44px;
-  }
-  
-  .logo-text h1{
-    font-size:20px;
-  }
-  
-  .logo-text p{
-    font-size:12px;
+    gap:16px;
+    padding:12px 20px;
   }
   
   .header-nav{
     margin-top:8px;
     display:flex;
-    flex-wrap:nowrap;
-    overflow-x:auto;
-    justify-content:flex-start;
-    gap:8px;
-    padding-bottom:8px;
-    -webkit-overflow-scrolling:touch;
-    width:100%;
-    padding-left:8px;
-    padding-right:8px;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:12px;
   }
   
   .header-nav a{
     margin:0;
-    padding:8px 10px;
-    font-size:12px;
-    white-space:nowrap;
-    flex-shrink:0;
+    padding:6px 12px;
   }
   
   .form-group{
@@ -829,231 +1019,82 @@ body{
   
   .form-control{
     min-width:100%;
-    padding:12px 14px;
-    font-size:14px;
   }
   
   .btn{
     width:100%;
     justify-content:center;
-    padding:14px 20px;
-    font-size:15px;
   }
   
   .product-list{
     grid-template-columns:repeat(auto-fill, minmax(100%, 1fr));
-    gap:16px;
-  }
-  
-  .product-img{
-    height:200px;
-  }
-  
-  .product-name{
-    font-size:16px;
-  }
-  
-  .product-price{
-    font-size:18px;
-  }
-  
-  .product-desc{
-    font-size:13px;
-    height:40px;
-  }
-  
-  .footer-inner{
-    flex-direction:column;
-    gap:24px;
-    padding:0 16px;
-  }
-  
-  .footer-contact, .footer-links{
-    min-width:100%;
-  }
-  
-  .chat-body{
-    height:280px;
-    padding:12px;
-    gap:12px;
-  }
-  
-  .msg{
-    max-width:85%;
-    padding:10px 14px;
-    font-size:14px;
-  }
-  
-  .card{
-    margin:16px;
-    padding:16px;
-    border-radius:10px;
-  }
-  
-  .card-title{
-    font-size:16px;
-    margin-bottom:16px;
-  }
-  
-  .btn-group{
-    margin:0 12px 20px;
-    gap:8px;
-  }
-  
-  .category-btn{
-    padding:10px 14px;
-    font-size:12px;
-  }
-  
-  .product-section{
-    margin:20px 16px;
-  }
-  
-  .section-title{
-    font-size:18px;
-    margin-bottom:20px;
-  }
-  
-  .product-filter{
-    gap:8px;
-    margin-bottom:20px;
-  }
-  
-  .filter-btn{
-    padding:8px 14px;
-    font-size:12px;
-  }
-  
-  .chat-container{
-    margin:20px 16px;
-    border-radius:10px;
-  }
-  
-  .chat-header{
-    padding:14px;
-  }
-  
-  .chat-header h3{
-    font-size:15px;
-  }
-  
-  .chat-footer{
-    padding:12px;
-    flex-direction:column;
-    gap:10px;
-  }
-  
-  .chat-input{
-    padding:12px;
-    font-size:14px;
-    height:48px;
-  }
-  
-  .chat-btn{
-    width:100%;
-    justify-content:center;
-    padding:12px;
-  }
-}
-
-@media (max-width:480px){
-  .logo img{
-    width:40px;
-    height:40px;
-  }
-  
-  .logo-text h1{
-    font-size:18px;
-  }
-  
-  .logo-text p{
-    font-size:11px;
-  }
-  
-  .card-title{
-    font-size:15px;
-  }
-  
-  .section-title{
-    font-size:17px;
-  }
-  
-  .product-info{
-    padding:14px;
+    gap:20px;
   }
   
   .product-img{
     height:180px;
   }
   
-  .footer-contact p{
-    font-size:13px;
+  .footer-inner{
+    flex-direction:column;
+    gap:32px;
   }
   
-  .footer-links a{
-    font-size:13px;
-  }
-  
-  .copyright{
-    font-size:12px;
+  .chat-body{
+    height:300px;
     padding:16px;
   }
   
-  /* 手机端底部导航栏 */
-  .mobile-nav{
-    display:none;
+  .msg{
+    max-width:85%;
   }
   
-  @media (max-width:768px){
-    .mobile-nav{
-      display:flex;
-      position:fixed;
-      bottom:0;
-      left:0;
-      right:0;
-      background:#fff;
-      box-shadow:0 -2px 10px rgba(0,0,0,.08);
-      z-index:1000;
-      padding:8px 0;
-      padding-bottom:calc(8px + env(safe-area-inset-bottom));
-    }
-    
-    .mobile-nav-item{
-      flex:1;
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      justify-content:center;
-      gap:4px;
-      color:#666;
-      text-decoration:none;
-      font-size:11px;
-      padding:4px;
-      cursor:pointer;
-      -webkit-tap-highlight-color:transparent;
-    }
-    
-    .mobile-nav-item:active{
-      opacity:0.7;
-    }
-    
-    .mobile-nav-item.active{
-      color:#4361ee;
-    }
-    
-    .mobile-nav-icon{
-      font-size:22px;
-      line-height:1;
-    }
-    
-    /* 为底部导航留出空间 */
-    body{
-      padding-bottom:60px;
-    }
-    
-    .header{
-      padding-bottom:calc(12px + env(safe-area-inset-top));
-    }
+  .card{
+    margin:16px 16px 20px;
+    padding:20px;
+  }
+  
+  .btn-group{
+    margin:0 16px 24px;
+  }
+  
+  .product-section{
+    margin:24px 16px;
+  }
+  
+  .chat-container{
+    margin:24px 16px;
+  }
+}
+
+@media (max-width:480px){
+  .logo img{
+    width:48px;
+    height:48px;
+  }
+  
+  .logo-text h1{
+    font-size:20px;
+  }
+  
+  .card-title{
+    font-size:16px;
+  }
+  
+  .section-title{
+    font-size:20px;
+  }
+  
+  .product-info{
+    padding:16px;
+  }
+  
+  .chat-footer{
+    padding:16px;
+  }
+  
+  .chat-input{
+    padding:12px 16px;
   }
 }
 </style>
@@ -1070,212 +1111,38 @@ body{
       </div>
     </div>
     <div class="header-nav">
-
-<!-- 首屏横幅 -->
-<div class="hero">
-  <div class="hero-bg"></div>
-  <div class="hero-content">
-    <div class="hero-badge">📢 限时优惠价</div>
-    <h1 class="hero-title">给孩子一个<br>健康的学习环境</h1>
-    <p class="hero-desc">护脊防近视学习桌 | AI智能监测 | 终身质保</p>
-    <div class="hero-cta">
-      <a href="#products" class="btn btn-primary">查看产品</a>
-      <a href="#consult" class="btn btn-outline">在线咨询</a>
-    </div>
-    <div class="hero-stats">
-      <div class="stat-item">
-        <span class="stat-num">22</span>
-        <span class="stat-label">年行业经验</span>
-      </div>
-      <div class="stat-item">
-        <span class="stat-num">50W+</span>
-        <span class="stat-label">家庭选择</span>
-      </div>
-      <div class="stat-item">
-        <span class="stat-num">98%</span>
-        <span class="stat-label">好评率</span>
-      </div>
-    </div>
-  </div>
-  <div class="hero-wave">
-    <svg viewBox="0 0 1440 120" preserveAspectRatio="none">
-      <path d="M0,64 C480,150 960,-20 1440,64 L1440,120 L0,120 Z" fill="#f0f2f5"></path>
-    </svg>
-  </div>
-</div>
-
-<style>
-/* 首屏横幅样式 */
-.hero{
-  position:relative;
-  background:linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
-  padding:60px 24px 80px;
-  overflow:hidden;
-  text-align:center;
-}
-
-.hero-bg{
-  position:absolute;
-  top:0;
-  left:0;
-  right:0;
-  bottom:0;
-  background:url('data:image/svg+xml,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><circle cx=\"20\" cy=\"20\" r=\"1\" fill=\"rgba(255,255,255,0.1)\"/><circle cx=\"60\" cy=\"40\" r=\"1.5\" fill=\"rgba(255,255,255,0.08)\"/><circle cx=\"80\" cy=\"10\" r=\"1\" fill=\"rgba(255,255,255,0.12)\"/><circle cx=\"40\" cy=\"70\" r=\"1.2\" fill=\"rgba(255,255,255,0.06)\"/><circle cx=\"90\" cy=\"60\" r=\"0.8\" fill=\"rgba(255,255,255,0.1)\"/><circle cx=\"10\" cy=\"80\" r=\"1\" fill=\"rgba(255,255,255,0.08)\"/></svg>');
-  opacity:0.8;
-}
-
-.hero-content{
-  position:relative;
-  z-index:1;
-  max-width:600px;
-  margin:0 auto;
-}
-
-.hero-badge{
-  display:inline-block;
-  background:rgba(255,255,255,.2);
-  backdrop-filter:blur(10px);
-  padding:8px 20px;
-  border-radius:50px;
-  font-size:14px;
-  color:#fff;
-  margin-bottom:20px;
-  border:1px solid rgba(255,255,255,.3);
-  animation:pulse 2s infinite;
-}
-
-.hero-title{
-  font-size:36px;
-  font-weight:700;
-  color:#fff;
-  line-height:1.3;
-  margin-bottom:16px;
-  text-shadow:0 4px 20px rgba(0,0,0,.15);
-}
-
-.hero-desc{
-  font-size:16px;
-  color:rgba(255,255,255,.9);
-  margin-bottom:28px;
-}
-
-.hero-cta{
-  display:flex;
-  gap:16px;
-  justify-content:center;
-  flex-wrap:wrap;
-  margin-bottom:40px;
-}
-
-.hero-cta .btn-primary{
-  background:#fff;
-  color:#667eea;
-  border:none;
-  padding:14px 32px;
-  border-radius:50px;
-  font-size:16px;
-  font-weight:600;
-  text-decoration:none;
-  transition:var(--transition-fast);
-  box-shadow:0 8px 30px rgba(0,0,0,.2);
-}
-
-.hero-cta .btn-primary:hover{
-  transform:translateY(-3px);
-  box-shadow:0 12px 40px rgba(0,0,0,.25);
-}
-
-.hero-cta .btn-outline{
-  background:transparent;
-  color:#fff;
-  border:2px solid rgba(255,255,255,.6);
-  padding:12px 30px;
-  border-radius:50px;
-  font-size:16px;
-  font-weight:600;
-  text-decoration:none;
-  transition:var(--transition-fast);
-}
-
-.hero-cta .btn-outline:hover{
-  background:rgba(255,255,255,.15);
-  border-color:#fff;
-}
-
-.hero-stats{
-  display:flex;
-  justify-content:center;
-  gap:40px;
-  flex-wrap:wrap;
-}
-
-.stat-item{
-  text-align:center;
-}
-
-.stat-num{
-  display:block;
-  font-size:28px;
-  font-weight:700;
-  color:#fff;
-}
-
-.stat-label{
-  font-size:13px;
-  color:rgba(255,255,255,.85);
-}
-
-.hero-wave{
-  position:absolute;
-  bottom:0;
-  left:0;
-  right:0;
-  line-height:0;
-}
-
-.hero-wave svg{
-  width:100%;
-  height:60px;
-  display:block;
-}
-
-@media (max-width:768px){
-  .hero{
-    padding:40px 16px 50px;
-  }
-  
-  .hero-title{
-    font-size:26px;
-  }
-  
-  .hero-desc{
-    font-size:14px;
-  }
-  
-  .hero-cta .btn-primary,
-  .hero-cta .btn-outline{
-    padding:12px 24px;
-    font-size:14px;
-  }
-  
-  .hero-stats{
-    gap:24px;
-  }
-  
-  .stat-num{
-    font-size:22px;
-  }
-  
-  .stat-label{
-    font-size:12px;
-  }
-}
-</style>
       <a href="https://www.bs-yc.com/" target="_blank">官网首页</a>
       <a href="https://www.bs-yc.com/product/" target="_blank">全产品库</a>
       <a href="https://www.bs-yc.com/store/" target="_blank">门店查询</a>
       <a href="https://www.bs-yc.com/news/" target="_blank">品牌动态</a>
       <a href="tel:400-188-6788">400-188-6788</a>
+    </div>
+  </div>
+</div>
+
+<!-- 顶部横幅 -->
+<div class="banner">
+  <div class="banner-content">
+    <span class="banner-tag">📢 限时优惠价</span>
+    <h1>给孩子一个<br>健康的学习环境</h1>
+    <p>护脊防近视学习桌 | AI智能监测 | 终身质保</p>
+    <div class="banner-buttons">
+      <a href="#products" class="banner-btn banner-btn-primary">查看产品</a>
+      <a href="#consult" class="banner-btn banner-btn-secondary">在线咨询</a>
+    </div>
+    <div class="banner-stats">
+      <div class="banner-stat">
+        <span class="banner-stat-num">22</span>
+        <span class="banner-stat-label">年行业经验</span>
+      </div>
+      <div class="banner-stat">
+        <span class="banner-stat-num">50W+</span>
+        <span class="banner-stat-label">家庭选择</span>
+      </div>
+      <div class="banner-stat">
+        <span class="banner-stat-num">98%</span>
+        <span class="banner-stat-label">好评率</span>
+      </div>
     </div>
   </div>
 </div>
@@ -1311,7 +1178,7 @@ body{
 </div>
 
 <!-- 产品展示区 -->
-<div class="product-section">
+<div class="product-section" id="products">
   <h2 class="section-title">全系列在售产品</h2>
   <div class="product-filter">
     <button class="filter-btn active" onclick="filterProduct('all')">全部产品</button>
@@ -1535,7 +1402,7 @@ body{
 </div>
 
 <!-- 智能客服聊天区 -->
-<div class="chat-container">
+<div class="chat-container" id="consult">
   <div class="chat-header">
     <h3>智能客服咨询</h3>
   </div>
@@ -1802,63 +1669,43 @@ window.onload=function(){
 
 // 平滑滚动全局配置
 document.documentElement.style.scrollBehavior='smooth'
+
+// 底部导航点击事件
+function switchTab(tab){
+  const items = document.querySelectorAll('.bottom-nav-item')
+  items.forEach(item => item.classList.remove('active'))
+  event.currentTarget.classList.add('active')
+  
+  if(tab === 'product'){
+    document.querySelector('.product-section').scrollIntoView({behavior:'smooth', block:'start'})
+  }else if(tab === 'consult'){
+    document.querySelector('.chat-container').scrollIntoView({behavior:'smooth', block:'start'})
+  }else if(tab === 'store'){
+    window.open('https://www.bs-yc.com/store/', '_blank')
+  }
+}
 </script>
 
-<!-- 手机端底部导航栏 -->
-<div class="mobile-nav">
-  <div class="mobile-nav-item active" onclick="scrollToTop()">
-    <span class="mobile-nav-icon">🏠</span>
-    <span>首页</span>
-  </div>
-  <div class="mobile-nav-item" onclick="scrollToElement('.product-section')">
-    <span class="mobile-nav-icon">📦</span>
-    <span>产品</span>
-  </div>
-  <div class="mobile-nav-item" onclick="scrollToElement('.chat-container')">
-    <span class="mobile-nav-icon">💬</span>
-    <span>咨询</span>
-  </div>
-  <div class="mobile-nav-item" onclick="window.open('https://www.bs-yc.com/store/', '_blank')">
-    <span class="mobile-nav-icon">📍</span>
-    <span>门店</span>
+<!-- 底部导航栏 -->
+<div class="bottom-nav">
+  <div class="bottom-nav-inner">
+    <div class="bottom-nav-item active" onclick="switchTab('home')">
+      <i>🏠</i>
+      <span>首页</span>
+    </div>
+    <div class="bottom-nav-item" onclick="switchTab('product')">
+      <i>📦</i>
+      <span>产品</span>
+    </div>
+    <div class="bottom-nav-item" onclick="switchTab('consult')">
+      <i>💬</i>
+      <span>咨询</span>
+    </div>
+    <div class="bottom-nav-item" onclick="switchTab('store')">
+      <i>📍</i>
+      <span>门店</span>
+    </div>
   </div>
 </div>
-
-<script>
-function scrollToTop(){
-  window.scrollTo({top:0, behavior:'smooth'});
-}
-
-function scrollToElement(selector){
-  var el = document.querySelector(selector);
-  if(el){
-    el.scrollIntoView({behavior:'smooth', block:'start'});
-  }
-}
-
-window.addEventListener('scroll', function(){
-  var sections = document.querySelectorAll('.card, .product-section, .chat-container');
-  var navItems = document.querySelectorAll('.mobile-nav-item');
-  var current = '';
-  
-  sections.forEach(function(section) {
-    var sectionTop = section.offsetTop;
-    if(window.scrollY >= sectionTop - 200){
-      current = section.getAttribute('class');
-    }
-  });
-  
-  if(current.includes('product')){
-    navItems[1].classList.add('active');
-    navItems.forEach(function(item, i) { if(i !== 1) item.classList.remove('active'); });
-  }else if(current.includes('chat')){
-    navItems[2].classList.add('active');
-    navItems.forEach(function(item, i) { if(i !== 2) item.classList.remove('active'); });
-  }else{
-    navItems[0].classList.add('active');
-    navItems.forEach(function(item, i) { if(i !== 0) item.classList.remove('active'); });
-  }
-});
-</script>
 </body>
 </html>
