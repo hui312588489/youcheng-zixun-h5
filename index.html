@@ -2,7 +2,11 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="format-detection" content="telephone=yes">
+<meta name="format-detection" content="address=no">
 <title>博士有成智能客服</title>
 <style>
 /* 全局样式重置与基础配置 */
@@ -757,23 +761,58 @@ body{
 
 /* 响应式调整（精细化适配） */
 @media (max-width:768px){
+  body{
+    padding:0;
+    max-width:100%;
+  }
+  
+  .header{
+    padding:12px 0;
+  }
+  
   .header-inner{
     flex-direction:column;
-    gap:16px;
-    padding:12px 20px;
+    gap:12px;
+    padding:0 16px;
+  }
+  
+  .logo{
+    gap:10px;
+  }
+  
+  .logo img{
+    width:44px;
+    height:44px;
+  }
+  
+  .logo-text h1{
+    font-size:20px;
+  }
+  
+  .logo-text p{
+    font-size:12px;
   }
   
   .header-nav{
     margin-top:8px;
     display:flex;
-    flex-wrap:wrap;
-    justify-content:center;
-    gap:12px;
+    flex-wrap:nowrap;
+    overflow-x:auto;
+    justify-content:flex-start;
+    gap:8px;
+    padding-bottom:8px;
+    -webkit-overflow-scrolling:touch;
+    width:100%;
+    padding-left:8px;
+    padding-right:8px;
   }
   
   .header-nav a{
     margin:0;
-    padding:6px 12px;
+    padding:8px 10px;
+    font-size:12px;
+    white-space:nowrap;
+    flex-shrink:0;
   }
   
   .form-group{
@@ -782,82 +821,231 @@ body{
   
   .form-control{
     min-width:100%;
+    padding:12px 14px;
+    font-size:14px;
   }
   
   .btn{
     width:100%;
     justify-content:center;
+    padding:14px 20px;
+    font-size:15px;
   }
   
   .product-list{
     grid-template-columns:repeat(auto-fill, minmax(100%, 1fr));
-    gap:20px;
+    gap:16px;
+  }
+  
+  .product-img{
+    height:200px;
+  }
+  
+  .product-name{
+    font-size:16px;
+  }
+  
+  .product-price{
+    font-size:18px;
+  }
+  
+  .product-desc{
+    font-size:13px;
+    height:40px;
+  }
+  
+  .footer-inner{
+    flex-direction:column;
+    gap:24px;
+    padding:0 16px;
+  }
+  
+  .footer-contact, .footer-links{
+    min-width:100%;
+  }
+  
+  .chat-body{
+    height:280px;
+    padding:12px;
+    gap:12px;
+  }
+  
+  .msg{
+    max-width:85%;
+    padding:10px 14px;
+    font-size:14px;
+  }
+  
+  .card{
+    margin:16px;
+    padding:16px;
+    border-radius:10px;
+  }
+  
+  .card-title{
+    font-size:16px;
+    margin-bottom:16px;
+  }
+  
+  .btn-group{
+    margin:0 12px 20px;
+    gap:8px;
+  }
+  
+  .category-btn{
+    padding:10px 14px;
+    font-size:12px;
+  }
+  
+  .product-section{
+    margin:20px 16px;
+  }
+  
+  .section-title{
+    font-size:18px;
+    margin-bottom:20px;
+  }
+  
+  .product-filter{
+    gap:8px;
+    margin-bottom:20px;
+  }
+  
+  .filter-btn{
+    padding:8px 14px;
+    font-size:12px;
+  }
+  
+  .chat-container{
+    margin:20px 16px;
+    border-radius:10px;
+  }
+  
+  .chat-header{
+    padding:14px;
+  }
+  
+  .chat-header h3{
+    font-size:15px;
+  }
+  
+  .chat-footer{
+    padding:12px;
+    flex-direction:column;
+    gap:10px;
+  }
+  
+  .chat-input{
+    padding:12px;
+    font-size:14px;
+    height:48px;
+  }
+  
+  .chat-btn{
+    width:100%;
+    justify-content:center;
+    padding:12px;
+  }
+}
+
+@media (max-width:480px){
+  .logo img{
+    width:40px;
+    height:40px;
+  }
+  
+  .logo-text h1{
+    font-size:18px;
+  }
+  
+  .logo-text p{
+    font-size:11px;
+  }
+  
+  .card-title{
+    font-size:15px;
+  }
+  
+  .section-title{
+    font-size:17px;
+  }
+  
+  .product-info{
+    padding:14px;
   }
   
   .product-img{
     height:180px;
   }
   
-  .footer-inner{
-    flex-direction:column;
-    gap:32px;
+  .footer-contact p{
+    font-size:13px;
   }
   
-  .chat-body{
-    height:300px;
+  .footer-links a{
+    font-size:13px;
+  }
+  
+  .copyright{
+    font-size:12px;
     padding:16px;
   }
   
-  .msg{
-    max-width:85%;
+  /* 手机端底部导航栏 */
+  .mobile-nav{
+    display:none;
   }
   
-  .card{
-    margin:16px 16px 20px;
-    padding:20px;
-  }
-  
-  .btn-group{
-    margin:0 16px 24px;
-  }
-  
-  .product-section{
-    margin:24px 16px;
-  }
-  
-  .chat-container{
-    margin:24px 16px;
-  }
-}
-
-@media (max-width:480px){
-  .logo img{
-    width:48px;
-    height:48px;
-  }
-  
-  .logo-text h1{
-    font-size:20px;
-  }
-  
-  .card-title{
-    font-size:16px;
-  }
-  
-  .section-title{
-    font-size:20px;
-  }
-  
-  .product-info{
-    padding:16px;
-  }
-  
-  .chat-footer{
-    padding:16px;
-  }
-  
-  .chat-input{
-    padding:12px 16px;
+  @media (max-width:768px){
+    .mobile-nav{
+      display:flex;
+      position:fixed;
+      bottom:0;
+      left:0;
+      right:0;
+      background:#fff;
+      box-shadow:0 -2px 10px rgba(0,0,0,.08);
+      z-index:1000;
+      padding:8px 0;
+      padding-bottom:calc(8px + env(safe-area-inset-bottom));
+    }
+    
+    .mobile-nav-item{
+      flex:1;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      gap:4px;
+      color:#666;
+      text-decoration:none;
+      font-size:11px;
+      padding:4px;
+      cursor:pointer;
+      -webkit-tap-highlight-color:transparent;
+    }
+    
+    .mobile-nav-item:active{
+      opacity:0.7;
+    }
+    
+    .mobile-nav-item.active{
+      color:#4361ee;
+    }
+    
+    .mobile-nav-icon{
+      font-size:22px;
+      line-height:1;
+    }
+    
+    /* 为底部导航留出空间 */
+    body{
+      padding-bottom:60px;
+    }
+    
+    .header{
+      padding-bottom:calc(12px + env(safe-area-inset-top));
+    }
   }
 }
 </style>
@@ -1405,6 +1593,63 @@ window.onload=function(){
 
 // 平滑滚动全局配置
 document.documentElement.style.scrollBehavior='smooth'
+</script>
+
+<!-- 手机端底部导航栏 -->
+<div class="mobile-nav">
+  <div class="mobile-nav-item active" onclick="scrollToTop()">
+    <span class="mobile-nav-icon">🏠</span>
+    <span>首页</span>
+  </div>
+  <div class="mobile-nav-item" onclick="scrollToElement('.product-section')">
+    <span class="mobile-nav-icon">📦</span>
+    <span>产品</span>
+  </div>
+  <div class="mobile-nav-item" onclick="scrollToElement('.chat-container')">
+    <span class="mobile-nav-icon">💬</span>
+    <span>咨询</span>
+  </div>
+  <div class="mobile-nav-item" onclick="window.open('https://www.bs-yc.com/store/', '_blank')">
+    <span class="mobile-nav-icon">📍</span>
+    <span>门店</span>
+  </div>
+</div>
+
+<script>
+function scrollToTop(){
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+function scrollToElement(selector){
+  var el = document.querySelector(selector);
+  if(el){
+    el.scrollIntoView({behavior:'smooth', block:'start'});
+  }
+}
+
+window.addEventListener('scroll', function(){
+  var sections = document.querySelectorAll('.card, .product-section, .chat-container');
+  var navItems = document.querySelectorAll('.mobile-nav-item');
+  var current = '';
+  
+  sections.forEach(function(section) {
+    var sectionTop = section.offsetTop;
+    if(window.scrollY >= sectionTop - 200){
+      current = section.getAttribute('class');
+    }
+  });
+  
+  if(current.includes('product')){
+    navItems[1].classList.add('active');
+    navItems.forEach(function(item, i) { if(i !== 1) item.classList.remove('active'); });
+  }else if(current.includes('chat')){
+    navItems[2].classList.add('active');
+    navItems.forEach(function(item, i) { if(i !== 2) item.classList.remove('active'); });
+  }else{
+    navItems[0].classList.add('active');
+    navItems.forEach(function(item, i) { if(i !== 0) item.classList.remove('active'); });
+  }
+});
 </script>
 </body>
 </html>
